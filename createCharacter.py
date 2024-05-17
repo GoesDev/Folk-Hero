@@ -37,3 +37,8 @@ class createCharacter():
             print("Congratulations! You earned a level!\n")
             self.levelUp()
         self.showCharacter()
+
+    def attackMonster(self):
+        attack_roll = randint(1, 12) + (self.power // 3)
+        damage = randint(1, 8) + self.level
+        return attack_roll, damage
