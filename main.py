@@ -37,9 +37,10 @@ while class_option is False:
 os.system('cls')
 game_over = False
 
-new_monster = createMonster()
 
 while game_over is False:
+
+    new_monster = createMonster()
 
     new_character.showCharacter()
     print()
@@ -63,3 +64,8 @@ while game_over is False:
     combat_choice = input()
     if combat_choice == '0':
         runCombat(new_character, new_monster)
+        if new_character.life <= 0:
+            print("\nGamer Over!")
+            game_over = True
+
+    new_dungeon.nextRoom()

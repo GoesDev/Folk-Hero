@@ -42,3 +42,6 @@ class createCharacter():
         attack_roll = randint(1, 12) + (self.power // 3)
         damage = randint(1, 8) + self.level
         return attack_roll, damage
+
+    def takeDamage(self, damage):
+        self.life -= damage

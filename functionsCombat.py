@@ -22,8 +22,9 @@ def runCombat(character, monster):
 
         if option == '0':
             attack_roll, damage = character.attackMonster()
+            print(f"\nYou roll a {attack_roll}. ", end="")
             if attack_roll >= monster.status:
-                print(f"\nYou did {damage} damage.")
+                print(f"You did {damage} damage.")
                 monster.takeDamage(damage)
                 if monster.life <= 0:
                     print("Monster Die!")
@@ -31,7 +32,22 @@ def runCombat(character, monster):
                     os.system('cls')
                     combat_cond = False
                     continue
-                input("\nNext turn")
             else:
                 print("You miss.")
-                input("\nNext turn")
+
+            monster_attack_roll, monster_damage = monster.attackCharacter()
+            print(f"\n{monster.monster_type} roll a {monster_attack_roll}. ",
+                  end="")
+            if monster_attack_roll >= character.defense:
+                print(f"You took {monster_damage}.")
+                character.takeDamage(monster_damage)
+                if character.life <= 0:
+                    print("You died")
+                    input("End combat")
+                    os.system("cls")
+                    combat_cond = False
+                    continue
+            else:
+                print(f"{monster.monster_type} miss.")
+
+            input("\nNext turn")
