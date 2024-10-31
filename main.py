@@ -79,6 +79,7 @@ while game_over is False:
         else:
             runCombat(new_character, new_monster)
             if new_character.life <= 0:
+                os.system('cls')
                 print("\nGAME OVER!")
                 game_over = True
             else:
