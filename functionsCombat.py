@@ -3,51 +3,121 @@
 import os
 
 
+def xp_after_combat(character, monster):
+    character.gainXP(monster.xp_value)
+    input("\nPress any button to continue")
+    os.system('cls')
+
+
+def show_combat(character, monster, combat_turn):
+    """Mostra as estatísticas atuais do personagem e do inimigo"""
+    print(f"***__COMBAT__*** Turn #{combat_turn}\n")
+    character.showCharacter()
+    print("***" * 3)
+    print("")
+    monster.showMonster()
+    print("---" * 3)
+    print("")
+
+
+def is_dead(character, monster,  combat_cond):
+    """Checa se o personagem ou monstro está morto, caso esteja,
+    devolve a condição de combate como falso, e ele é encerrado"""
+    if character.life <= 0:
+        print("\nYou Died!")
+        input("End combat")
+        combat_cond = False
+        return combat_cond
+    if monster.life <= 0:
+        print("Monster Die!")
+        input("End combat")
+        xp_after_combat(character, monster)
+        combat_cond = False
+        return combat_cond
+    return combat_cond
+
+
+def player_attack_turn(character, monster):
+    """O personagem ataca o monstro, em acerto, causa dano"""
+    attack_roll, damage = character.attackMonster()
+    print(f"\nYou roll a {attack_roll}. ", end="")
+    if attack_roll >= monster.status:
+        print(f"You did {damage} damage.")
+        monster.takeDamage(damage)
+    else:
+        print("You miss.")
+
+
+def monster_attack_turn(character, monster):
+    """O monstro ataca o personagem, em acerto, causa dano"""
+    monster_attack_roll, monster_damage = monster.attackCharacter()
+    print(f"\n{monster.monster_type} roll a {monster_attack_roll}. ", end="")
+    if monster_attack_roll >= character.defense:
+        print(f"You took {monster_damage}.")
+        character.takeDamage(monster_damage)
+    else:
+        print(f"{monster.monster_type} miss.")
+
+
 def runCombat(character, monster):
 
     combat_cond = True
-    # combat_log = []
     combat_turn = 1
 
     while combat_cond is True:
         os.system('cls')
 
-        print(f"***__COMBAT__*** Turn #{combat_turn}")
-        character.showCharacter()
-        print("***" * 3)
-        monster.showMonster()
-        print("---" * 3)
+        show_combat(character, monster, combat_turn)
 
-        option = input("Attack [0] | Run [1]")
+        print("[ENTER] Attack | [1] Run | [2] Potion | [3] Skill: ")
+        option = input("- ")
 
-        if option == '0':
-            attack_roll, damage = character.attackMonster()
-            print(f"\nYou roll a {attack_roll}. ", end="")
-            if attack_roll >= monster.status:
-                print(f"You did {damage} damage.")
-                monster.takeDamage(damage)
-                if monster.life <= 0:
-                    print("Monster Die!")
-                    input("End combat")
-                    os.system('cls')
-                    combat_cond = False
+        if option == '1':
+            os.system('cls')
+            combat_cond = False
+        elif option == '2':
+            character.useHeal()
+            monster_attack_turn(character, monster)
+            combat_cond = is_dead(character, monster, combat_cond)
+            if not combat_cond:
+                continue
+        elif option == '3':
+            if character.character_class == 'Warrior':
+                print("Using BRAVE skill!")
+                character.useSkillWarrior()
+            elif character.character_class == 'Cleric':
+                print("Using HOLY MAGIC skill!")
+                character.useSkillCleric()
+            elif character.character_class == 'Thief':
+                print("Using ASSASSINATE skill!")
+                monster.takeDamage(100)
+                character.skill_uses -= 1
+                combat_cond = is_dead(character, monster, combat_cond)
+                if not combat_cond:
                     continue
-            else:
-                print("You miss.")
+            elif character.character_class == 'Mage':
+                print('Using MAGIC MISSILE skill')
+                player_attack_turn(character, monster)
+                player_attack_turn(character, monster)
+                player_attack_turn(character, monster)
+                character.skill_uses -= 1
+                combat_cond = is_dead(character, monster, combat_cond)
+            if not combat_cond:
+                continue
+            monster_attack_turn(character, monster)
+            combat_cond = is_dead(character, monster, combat_cond)
+            if not combat_cond:
+                continue
+        else:
+            player_attack_turn(character, monster)
+            combat_cond = is_dead(character, monster, combat_cond)
+            if not combat_cond:
+                continue
+            monster_attack_turn(character, monster)
+            combat_cond = is_dead(character, monster, combat_cond)
+            if not combat_cond:
+                continue
 
-            monster_attack_roll, monster_damage = monster.attackCharacter()
-            print(f"\n{monster.monster_type} roll a {monster_attack_roll}. ",
-                  end="")
-            if monster_attack_roll >= character.defense:
-                print(f"You took {monster_damage}.")
-                character.takeDamage(monster_damage)
-                if character.life <= 0:
-                    print("You died")
-                    input("End combat")
-                    os.system("cls")
-                    combat_cond = False
-                    continue
-            else:
-                print(f"{monster.monster_type} miss.")
-
-            input("\nNext turn")
+        if combat_cond:
+            input("\nNext turn: ")
+        os.system('cls')

@@ -7,15 +7,16 @@ class createDungeon():
 
     def __init__(self):
         self.name = 'Catacombs of the Conquered Warrior'
-        self.rooms_qtd = randint(20, 30)
+        self.rooms_qtd = randint(10, 15)
         self.type = dungeon_type[randint(0, 2)]
-        self.actual_room = 0
+        self.actual_room = 1
 
     def showDungeon(self):
         print(f"{self.name.title()}")
-        print(f"Dungeon Type: {self.type} | Room #{self.actual_room}")
+        print(f"Dungeon Type: {self.type}")
+        print(f"Room #{self.actual_room}/{self.rooms_qtd}")
 
     def nextRoom(self):
         self.actual_room += 1
         if self.actual_room > self.rooms_qtd:
-            print("é isso ai")
+            print(">>> Congratulations!!! <<<")

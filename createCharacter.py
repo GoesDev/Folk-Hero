@@ -14,6 +14,8 @@ class createCharacter():
         self.life_max = self.life
         self.xp_points = 0
         self.xp_to_next_level = 100
+        self.heal_uses = 3
+        self.skill_uses = 3
 
     def showCharacter(self):
         print(f"Character: {self.character_name} | Level: {self.level}")
@@ -21,6 +23,7 @@ class createCharacter():
         print(f"Life Poins: {self.life}/{self.life_max}")
         print(f"Power: {self.power} | Defense: {self.defense}")
         print(f"XP: {self.xp_points}/{self.xp_to_next_level}")
+        print(f"Skill Uses: {self.skill_uses} | Potion: {self.heal_uses}")
 
     def levelUp(self):
         self.level += 1
@@ -28,15 +31,15 @@ class createCharacter():
         self.defense += randint(1, 3)
         self.life_max += 5
         self.xp_to_next_level *= 2
+        self.life = self.life_max
 
     def gainXP(self, xp_earned):
         os.system('cls')
         self.xp_points += xp_earned
-        print(f"You received {xp_earned}\n")
-        if self.xp_points > self.xp_to_next_level:
+        print(f">>> You received {xp_earned} XP <<<\n")
+        if self.xp_points >= self.xp_to_next_level:
             print("Congratulations! You earned a level!\n")
             self.levelUp()
-        self.showCharacter()
 
     def attackMonster(self):
         attack_roll = randint(1, 12) + (self.power // 3)
@@ -45,3 +48,31 @@ class createCharacter():
 
     def takeDamage(self, damage):
         self.life -= damage
+
+    def useHeal(self):
+        if self.heal_uses > 0:
+            self.heal_uses -= 1
+            heal = randint(1, 6)
+            self.life += heal
+            print(f'You restored {heal} health points!')
+            if self.life > self.life_max:
+                self.life = self.life_max
+        else:
+            print('You have no healing potion available')
+
+    def useSkillWarrior(self):
+        if self.skill_uses > 0:
+            self.skill_uses -= 1
+            new_power = randint(1, 3)
+            new_defense = randint(1, 2)
+            self.power += new_power
+            self.defense -= new_defense
+            print(f'Your POWER increases by [{new_power}] !')
+            print(f'Your DEFENSE has dropped by [{new_defense}] !')
+
+    def useSkillCleric(self):
+        if self.character_class == 'Cleric':
+            self.life += 5 + self.level
+            print('You restored 5 health points!')
+            if self.life > self.life_max:
+                self.life = self.life_max
