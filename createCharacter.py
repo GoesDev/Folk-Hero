@@ -99,7 +99,7 @@ class createCharacter():
     def useSkillMage(self):
         if self.skill_uses > 0:
             self.skill_uses -= 1
-            self.life -= 3
+            self.life += 5
             print('Using MAGIC MISSILE skill! you gain 5 points of life')
             self.life += 5
             if self.life > self.life_max:

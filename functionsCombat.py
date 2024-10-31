@@ -74,6 +74,7 @@ def runCombat(character, monster):
 
         if option == '1':
             os.system('cls')
+            input("you ran from the fight!\n")
             combat_cond = False
         elif option == '2':
             character.useHeal()

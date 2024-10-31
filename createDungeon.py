@@ -18,5 +18,3 @@ class createDungeon():
 
     def nextRoom(self):
         self.actual_room += 1
-        if self.actual_room > self.rooms_qtd:
-            print(">>> Congratulations!!! <<<")
