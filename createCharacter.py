@@ -32,6 +32,8 @@ class createCharacter():
         self.life_max += 5
         self.xp_to_next_level *= 2
         self.life = self.life_max
+        if self.skill_uses < 3:
+            self.skill_uses += 1
 
     def gainXP(self, xp_earned):
         os.system('cls')
@@ -62,6 +64,7 @@ class createCharacter():
 
     def useSkillWarrior(self):
         if self.skill_uses > 0:
+            print("Using BRAVE skill!")
             self.skill_uses -= 1
             new_power = randint(1, 3)
             new_defense = randint(1, 2)
@@ -69,10 +72,22 @@ class createCharacter():
             self.defense -= new_defense
             print(f'Your POWER increases by [{new_power}] !')
             print(f'Your DEFENSE has dropped by [{new_defense}] !')
+        else:
+            print("You dont have any skill points!")
 
     def useSkillCleric(self):
-        if self.character_class == 'Cleric':
+        if self.skill_uses > 0:
+            print("Using HOLY MAGIC skill!")
+            self.skill_uses -= 1
             self.life += 5 + self.level
             print('You restored 5 health points!')
             if self.life > self.life_max:
                 self.life = self.life_max
+        else:
+            print("You dont have any skill points!")
+
+    def useSkillThief(self):
+        if self.skill_uses > 0:
+            print('Using ASSASSINATE skill')
+            self.skill_uses -= 1
+            return True

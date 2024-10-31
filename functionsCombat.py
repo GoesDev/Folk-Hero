@@ -83,18 +83,17 @@ def runCombat(character, monster):
                 continue
         elif option == '3':
             if character.character_class == 'Warrior':
-                print("Using BRAVE skill!")
                 character.useSkillWarrior()
             elif character.character_class == 'Cleric':
-                print("Using HOLY MAGIC skill!")
                 character.useSkillCleric()
             elif character.character_class == 'Thief':
-                print("Using ASSASSINATE skill!")
-                monster.takeDamage(100)
-                character.skill_uses -= 1
-                combat_cond = is_dead(character, monster, combat_cond)
-                if not combat_cond:
-                    continue
+                if character.useSkillThief():
+                    monster.takeDamage(100)
+                    combat_cond = is_dead(character, monster, combat_cond)
+                    if not combat_cond:
+                        continue
+                else:
+                    print("You dont have any skill points!")
             elif character.character_class == 'Mage':
                 print('Using MAGIC MISSILE skill')
                 player_attack_turn(character, monster)
