@@ -79,8 +79,8 @@ class createCharacter():
         if self.skill_uses > 0:
             print("Using HOLY MAGIC skill!")
             self.skill_uses -= 1
-            self.life += 5 + self.level
-            print('You restored 5 health points!')
+            self.life += 10 + self.level
+            print(f'You restored {10 + self.level} health points!')
             if self.life > self.life_max:
                 self.life = self.life_max
         else:
@@ -90,4 +90,11 @@ class createCharacter():
         if self.skill_uses > 0:
             print('Using ASSASSINATE skill')
             self.skill_uses -= 1
+            return True
+
+    def useSkillMage(self):
+        if self.skill_uses > 0:
+            self.skill_uses -= 1
+            self.life -= 3
+            print('Using MAGIC MISSILE skill! you suffer 3 points of damage')
             return True

@@ -20,20 +20,17 @@ class_list = ["Warrior", "Cleric", "Thief", "Mage"]
 class_option = False
 
 while class_option is False:
-
+    os.system('cls')
     print("Folk Hero has four classes, choose one from the list below:")
 
     print("(0) Warrior | (1) Cleric | (2) Thief | (3) Mage")
-    print("\nWARRIOR:The warrior has the highest Power and Defense statistics")
-    print('His Brave technique allows him to increase his physical power')
-    print('in exchange for reducing his defense.')
-    print('\nCLERIC: The Cleric has balanced statistics,')
-    print('and his Holy Magic allows him to heal in critical moments.')
-    print('\nTHIEF: The Rogue also has balanced statistics,')
-    print('and his Assassinate technique')
-    print('allows him to defeat enemies instantly.')
-    print('\nMAGE: The Mage has low stats, but has more uses for his skills.')
-    print('Your Magic Missiles spell performs three attacks.')
+    print('\nWARRIOR: Brave allows you to increase your Power ', end="")
+    print('in exchange for your Defense.')
+    print('\nCLERIC: Holy Magic allows you to heal ', end="")
+    print("yourself in critical moments.")
+    print('\nTHIEF: Assassinate allows you to instantly kill enemies.')
+    print('\nMAGE:Using Magic Missiles you make 3 attacks ', end="")
+    print('but suffer 3 points of damage.')
     chosen_class = input("\nClass: ")
 
     if chosen_class in ['0', '1', '2', '3']:
@@ -42,7 +39,7 @@ while class_option is False:
         class_option = True
     else:
         os.system('cls')
-        print("Try again!")
+        input("Try again! ")
 
 os.system('cls')
 game_over = False
@@ -57,11 +54,19 @@ while game_over is False:
     print()
     new_dungeon.showDungeon()
 
-    game_on = input("\nContinue to the next room? ([ENTER] Yes | [1] No)  ")
+    print("\nContinue to the next room? ([ENTER] Yes | [1] No | [2] Potion)  ")
+    game_on = input('- ')
     if game_on == '1':
         os.system('cls')
         game_over = True
         break
+    elif game_on == '2':
+        os.system('cls')
+        new_character.useHeal()
+        input("- ")
+        os.system('cls')
+        continue
+
     os.system('cls')
     print(f"\nA {new_monster.monster_type} appers!")
     new_monster.showMonster()

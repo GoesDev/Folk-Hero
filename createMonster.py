@@ -25,3 +25,10 @@ class createMonster():
 
     def takeDamage(self, damage):
         self.life -= damage
+
+    def iamBoss(self):
+        self.monster_type = 'King ' + self.monster_type
+        self.m_level = randint(4, 6)
+        self.life = self.m_level * 5
+        self.life_max = self.life
+        self.status = randint(3, 4) * self.m_level

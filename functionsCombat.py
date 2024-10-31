@@ -95,14 +95,15 @@ def runCombat(character, monster):
                 else:
                     print("You dont have any skill points!")
             elif character.character_class == 'Mage':
-                print('Using MAGIC MISSILE skill')
-                player_attack_turn(character, monster)
-                player_attack_turn(character, monster)
-                player_attack_turn(character, monster)
-                character.skill_uses -= 1
-                combat_cond = is_dead(character, monster, combat_cond)
-            if not combat_cond:
-                continue
+                if character.useSkillMage():
+                    player_attack_turn(character, monster)
+                    player_attack_turn(character, monster)
+                    player_attack_turn(character, monster)
+                    combat_cond = is_dead(character, monster, combat_cond)
+                    if not combat_cond:
+                        continue
+                else:
+                    print('You dont have any skill points!')
             monster_attack_turn(character, monster)
             combat_cond = is_dead(character, monster, combat_cond)
             if not combat_cond:
