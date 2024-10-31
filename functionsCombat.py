@@ -5,7 +5,7 @@ import os
 
 def xp_after_combat(character, monster):
     character.gainXP(monster.xp_value)
-    input("\nPress any button to continue")
+    input("\nPress any button to continue\n")
     os.system('cls')
 
 
@@ -24,12 +24,12 @@ def is_dead(character, monster,  combat_cond):
     """Checa se o personagem ou monstro está morto, caso esteja,
     devolve a condição de combate como falso, e ele é encerrado"""
     if character.life <= 0:
-        print("\nYou Died!")
+        print("\nYou Died!\n")
         input("End combat")
         combat_cond = False
         return combat_cond
     if monster.life <= 0:
-        print("Monster Die!")
+        print("\nMonster Die!\n")
         input("End combat")
         xp_after_combat(character, monster)
         combat_cond = False
@@ -84,6 +84,8 @@ def runCombat(character, monster):
         elif option == '3':
             if character.character_class == 'Warrior':
                 character.useSkillWarrior()
+                input("\nNext turn: ")
+                continue
             elif character.character_class == 'Cleric':
                 character.useSkillCleric()
             elif character.character_class == 'Thief':

@@ -24,13 +24,14 @@ while class_option is False:
     print("Folk Hero has four classes, choose one from the list below:")
 
     print("(0) Warrior | (1) Cleric | (2) Thief | (3) Mage")
-    print('\nWARRIOR: Brave allows you to increase your Power ', end="")
-    print('in exchange for your Defense.')
-    print('\nCLERIC: Holy Magic allows you to heal ', end="")
-    print("yourself in critical moments.")
-    print('\nTHIEF: Assassinate allows you to instantly kill enemies.')
-    print('\nMAGE:Using Magic Missiles you make 3 attacks ', end="")
-    print('but suffer 3 points of damage.')
+    print('\nWARRIOR: Brave skill allows you to increase your Power ', end="")
+    print('in exchange for your Defense. You 3 Max Life.')
+    print('You intimidate your opponents and they lose their turn')
+    print('\nCLERIC: Holy Magic skill allows you to heal ', end="")
+    print("yourself in critical moments. The amount of healing is 10 + level.")
+    print('\nTHIEF: Assassinate skill allows you to instantly kill enemies.')
+    print('\nMAGE: Magic Missiles skill allows you to make 3 attacks ', end="")
+    print('e gain 5 points of life.')
     chosen_class = input("\nClass: ")
 
     if chosen_class in ['0', '1', '2', '3']:
@@ -68,20 +69,33 @@ while game_over is False:
         continue
 
     os.system('cls')
-    print(f"\nA {new_monster.monster_type} appers!")
-    new_monster.showMonster()
-    print("[ENTER] Fight | [1] Run\n")
-    combat_choice = input()
-    if combat_choice == '1':
-        continue
+    if new_dungeon.actual_room < new_dungeon.rooms_qtd:
+        print(f"\nA {new_monster.monster_type} appers!")
+        new_monster.showMonster()
+        print("[ENTER] Fight | [1] Run\n")
+        combat_choice = input()
+        if combat_choice == '1':
+            continue
+        else:
+            runCombat(new_character, new_monster)
+            if new_character.life <= 0:
+                print("\nGAME OVER!")
+                game_over = True
+            else:
+                new_dungeon.nextRoom()
     else:
+        new_monster.iamBoss()
+        print("Careful! You have entered the last room of the dungeon", end="")
+        print(", get ready to face the Boss!")
+        input('- ')
+        print(f"\nA {new_monster.monster_type} appers!")
+        new_monster.showMonster()
+        input("[ENTER] Fight\n")
         runCombat(new_character, new_monster)
         if new_character.life <= 0:
             print("\nGAME OVER!")
             game_over = True
-        elif new_dungeon.actual_room >= new_dungeon.rooms_qtd:
+        else:
             print(">>> Congratulations!!! <<<")
             print(">>>    YOU   WIN!!     <<<")
             game_over = True
-        else:
-            new_dungeon.nextRoom()

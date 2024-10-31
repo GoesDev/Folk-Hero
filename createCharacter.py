@@ -21,7 +21,8 @@ class createCharacter():
         print(f"Character: {self.character_name} | Level: {self.level}")
         print(f"Class: {self.character_class}")
         print(f"Life Poins: {self.life}/{self.life_max}")
-        print(f"Power: {self.power} | Defense: {self.defense}")
+        print(f"Power: {self.power} [+{self.power // 3}] ", end="")
+        print(f"| Defense: {self.defense}")
         print(f"XP: {self.xp_points}/{self.xp_to_next_level}")
         print(f"Skill Uses: {self.skill_uses} | Potion: {self.heal_uses}")
 
@@ -54,7 +55,7 @@ class createCharacter():
     def useHeal(self):
         if self.heal_uses > 0:
             self.heal_uses -= 1
-            heal = randint(1, 6)
+            heal = randint(1, 8) + self.level
             self.life += heal
             print(f'You restored {heal} health points!')
             if self.life > self.life_max:
@@ -70,8 +71,11 @@ class createCharacter():
             new_defense = randint(1, 2)
             self.power += new_power
             self.defense -= new_defense
+            self.life_max += 3
             print(f'Your POWER increases by [{new_power}] !')
             print(f'Your DEFENSE has dropped by [{new_defense}] !')
+            print(f'Your MAX LIFE increases by {3}')
+            print('Enemy is intimidated and does not attack')
         else:
             print("You dont have any skill points!")
 
@@ -96,5 +100,8 @@ class createCharacter():
         if self.skill_uses > 0:
             self.skill_uses -= 1
             self.life -= 3
-            print('Using MAGIC MISSILE skill! you suffer 3 points of damage')
+            print('Using MAGIC MISSILE skill! you gain 5 points of life')
+            self.life += 5
+            if self.life > self.life_max:
+                self.life = self.life_max
             return True

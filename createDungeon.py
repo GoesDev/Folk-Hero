@@ -7,7 +7,7 @@ class createDungeon():
 
     def __init__(self):
         self.name = 'Catacombs of the Conquered Warrior'
-        self.rooms_qtd = randint(10, 15)
+        self.rooms_qtd = randint(10, 20)
         self.type = dungeon_type[randint(0, 2)]
         self.actual_room = 1
 
