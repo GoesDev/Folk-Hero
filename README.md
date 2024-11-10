@@ -10,8 +10,6 @@ I tried to write all the code in this program by myself, and sometimes looking a
 
 I did my best to organize the directories and structure of the program. I admit that some things could be better, but there came a point where I just wanted to finish it XD.
 
-After completing the project and being sure I wouldn't touch it again, at least for now, I used Bing's AI to correct and point out errors. In the "*corrected_by_AI*" folder are the files corrected by it. The files in the main directory are mine and have not been corrected; they are exactly as I left them. I made these corrections to guide me on the errors and problems I made, and I'll try to avoid them in my future projects. I can't wait to start new challenges!
-
 English isn't my first language, so I apologize for any typing or grammatical errors. I hope you understood the project, and I appreciate you taking the time to visit it!
 
 
